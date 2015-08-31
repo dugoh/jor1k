@@ -267,10 +267,10 @@ System.prototype.SendStringToTerminal = function(str)
 };
 
 System.prototype.LoadImageAndStart = function(url) {
-    this.SendStringToTerminal("\r================================================================================");
+//    this.SendStringToTerminal("\r================================================================================");
     
     if (typeof url  == 'string') {
-        this.SendStringToTerminal("\r\nLoading kernel and hard and basic file system from web server. Please wait ...\r\n");
+//        this.SendStringToTerminal("\r\nLoading kernel and hard and basic file system from web server. Please wait ...\r\n");
         utils.LoadBinaryResource(url, this.OnKernelLoaded.bind(this), function(error){throw error;});
     } else {
         this.OnKernelLoaded(url);
@@ -303,7 +303,7 @@ System.prototype.PatchKernel = function(length)
 };
 
 System.prototype.OnKernelLoaded = function(buffer) {
-    this.SendStringToTerminal("Decompressing kernel...\r\n");
+//    this.SendStringToTerminal("Decompressing kernel...\r\n");
     var buffer8 = new Uint8Array(buffer);
     var length = 0;
 
@@ -328,8 +328,8 @@ System.prototype.OnKernelLoaded = function(buffer) {
         this.ram.Little2Big(length);
     }
     message.Debug("Kernel loaded: " + length + " bytes");
-    this.SendStringToTerminal("Booting\r\n");
-    this.SendStringToTerminal("================================================================================");
+//    this.SendStringToTerminal("Booting\r\n");
+//    this.SendStringToTerminal("================================================================================");
     // we can start the boot process already, even if the filesystem is not yet ready
 
     this.cpu.Reset();
