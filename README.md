@@ -1,41 +1,34 @@
-# jor1k
+# Fork of jor1k
 
-![jor1k](http://jor1k.com/images/jor1k2.gif)
+jor1k is a OpenRISC 1000 emulator written in JavaScript running Linux.
 
-jor1k is a OpenRISC 1000 emulator written in JavaScript running Linux. It runs in almost any modern web browser. 
-Have a try and see if it runs in your browser by opening the [demo][project demo].
-More information can be found on the [Wiki][project wiki] pages. 
+Oldbsd is intended to become an emdaptation of
+* "Twenty Years of Berkeley Unix: From AT&T-Owned to Freely Redistributable"
+* "The Daemon, the GNU, and the Penguin"
 
-### Demos
-
-* Main [demo][project demo] page
-* [Edit, compile and run](http://s-macke.github.io/jor1k/demos/compile.html) C code in your browser
-* Symmetric multiprocessing with  [2 cores](http://s-macke.github.io/jor1k/demos/main.html?cpu=smp&n=2), [4 cores](http://s-macke.github.io/jor1k/demos/main.html?cpu=smp&n=4), [8 cores](http://s-macke.github.io/jor1k/demos/main.html?cpu=smp&n=8), [16 cores](http://s-macke.github.io/jor1k/demos/main/index.html?cpu=smp&n=16) (unstable with inreasing cores)
-* Simple [demo](http://s-macke.github.io/jor1k/demos/simple.html)
-* RTEMS (real time operating system) [demo](http://s-macke.github.io/jor1k/demos/rtems.html)
+and other tales of UNIX/BSD lore running in simh in linux in jor1k in javascript in your browser.
 
 
-### Project Links
+##emdaptation
+[em-d-uh p-tey-shuh n] 
 
- 
- * [Bugtracker][project issues] to report any issues or feature requests
- * [Wiki][project wiki] containing more detailed descriptions
+noun
+* 1.
+the state of being emdapted; running in an emulator.
+* 2.
+something produced by emulating:
+an emdaptation of a UNIX history book.
 
-### LICENSE
- * The program is distributed under the terms of the Simplified BSD License. The license details can be found in the file "LICENSE.md"
- * The ACE editor is BSD licensed.
-
-### Developer
-Sebastian Macke [simulationcorner.net](http://simulationcorner.net)
-
-### Contributors
-Gerard Braad [github.com/gbraad](http://github.com/gbraad)  
-Ben Burns [github.com/benjamincburns](http://github.com/benjamincburns)  
-Lawrence Angrave [github.com/angrave](http://github.com/angrave)  
-Neelabh Gupta [github.com/neelabhg](http://github.com/neelabhg)
+Origins: Word play on emscripten, embiggen, emulating, adapting
 
 
-[or1k specification]: http://opencores.org/or1k/Main_Page
-[project demo]: http://s-macke.github.com/jor1k/demos/main.html
-[project issues]: https://github.com/s-macke/jor1k/issues
-[project wiki]: https://github.com/s-macke/jor1k/wiki
+
+### Experiments and fun with jor1k, mostly unfinished
+
+![jor1k](http://www.oldbsd.org/ss.png)
+
+* Automated installation of UNIX v6 on [oldbsd](http://www.oldbsd.org)
+* Flat [VT100] glass tty (http://www.hit2000.nl/jor1k/demos/crt2.html)
+* Bulged / pinched [ADM-3a] (http://www.hit2000.nl/jor1k/demos/crt.html)
+* Experiment of the [day] (www.minac.nl/j/jor1k/demos/2simple.html) - 2 model 33 teletypes
+
