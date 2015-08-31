@@ -31,4 +31,5 @@ Origins: Word play on emscripten, embiggen, emulating, adapting
 * Flat [VT100] glass tty (http://www.hit2000.nl/jor1k/demos/crt2.html)
 * Bulged / pinched [ADM-3a] (http://www.hit2000.nl/jor1k/demos/crt.html)
 * Experiment of the [day] (www.minac.nl/j/jor1k/demos/2simple.html) - 2 model 33 teletypes
+* This fork. Anything outside demos/2ttys.html will break.
 
