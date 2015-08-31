@@ -1,0 +1,23 @@
+<!doctype html>
+    <head>
+        <title>Teletype KSR-33 demo</title>
+        <meta name="keywords" content="emulation">
+        <meta name="author" content="Jacob Goense">
+        <link rel="stylesheet" href="css/tty.css">
+    </head>
+<h1>Teletype KSR-33 demo</h1><h3>.</h3>
+<canvas id="tty0" class="screen" width="864" height="792"> Terminal uses canvas </canvas>
+<canvas id="tty1" class="screen" width="864" height="792"> Terminal uses canvas </canvas>
+<script src="../bin/jor1k-master-min.js"></script>
+
+<script>
+var Jor1k = require("Jor1k");
+var LinuxTerm = require("LinuxTerm");
+var term0 = new LinuxTerm("tty0");
+var term1 = new LinuxTerm("tty1");
+jor1kparameters = {
+    terms: [ term0 , term1],
+    path: "../bin/",
+}
+jor1kgui = new Jor1k(jor1kparameters);
+</script>

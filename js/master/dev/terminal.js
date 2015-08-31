@@ -29,7 +29,7 @@ function Terminal(nrows, ncolumns, elemId) {
     if (ele.tagName == "CANVAS") {
         this.canvas = ele;
         this.context = this.canvas.getContext("2d");
-        this.context.font = "13px courier,fixed,swiss,monospace,sans-serif";
+        this.context.font = "17px tty";
     } else {
         this.Table = ele;
         this.rowelements = new Array(this.nrows);
@@ -65,7 +65,7 @@ function Terminal(nrows, ncolumns, elemId) {
 
     this.utf8converter = new UTF8.UTF8StreamToUnicode();
 
-    this.trows = 40;
+    this.trows = 64;
     this.brows = this.trows - this.nrows;
     this.bufferp = 0;
     this.screen = new Array(this.trows);
@@ -133,7 +133,7 @@ Terminal.prototype.deepCopy = function(oldObj) {
 Terminal.prototype.DeleteRow = function(row) {
     var deletedScreenRow = this.deepCopy(this.screen[this.brows + row]);
     var deletedColorRow = this.deepCopy(this.color[this.brows + row]);
-    if(row == 23){
+    if(row == 47){
         for(var i = 0;i < this.brows - 1;i++){
             this.screen[i] = this.screen[i + 1];
             this.color[i] = this.color[i + 1];
@@ -160,7 +160,7 @@ Terminal.prototype.DeleteArea = function(row, column, row2, column2) {
 
 
 Terminal.prototype.UpdateRowCanvas = function(row) {
-    var y = row << 4;
+    var y = row * 18;
     var line = this.screen[this.brows + row];
     var c = this.color[this.brows + row][0]|0;
     var n = 0;
@@ -172,16 +172,16 @@ Terminal.prototype.UpdateRowCanvas = function(row) {
         if (this.cursorvisible)
         if (row == this.cursory)
         if (column == this.cursorx) {
-            cnew |= 0x600;
+            cnew |= 0x700;
         }
 
         if (c != cnew) {
-            var x = (column - n) << 3;
-            this.context.fillStyle = Colors[(c >>> 8) & 0x1F]; 
-            this.context.fillRect(x, y, n*8, 16);
+            var x = (column - n) * 11;
+            this.context.fillStyle = Colors[(c >>> 8) & 0x1F];
+            this.context.fillRect(x, y, n*11, 18);
             this.context.fillStyle = Colors[c & 0x1F];
             for(var i=0; i<n; i++) {
-                this.context.fillText(String.fromCharCode(line[column - n + i]), x+(i<<3), y+12);
+                this.context.fillText(String.fromCharCode(line[column - n + i]), x+(i*11), y+16);
             }
             c = cnew;
             n = 0;
@@ -190,16 +190,15 @@ Terminal.prototype.UpdateRowCanvas = function(row) {
         n++;
     }
 
-    var x = (column - n) << 3;
-    this.context.fillStyle = Colors[(c >>> 8) & 0x1F]; 
-    this.context.fillRect(x, y, n*8, 16);
+    var x = (column - n) * 11;
+    this.context.fillStyle = Colors[(c >>> 8) & 0x1F];
+    this.context.fillRect(x, y, n*11, 18);
     this.context.fillStyle = Colors[c & 0x1F];
     for(var i=0; i<n; i++) {
-        this.context.fillText(String.fromCharCode(line[column - n + i]), x+(i<<3), y+12);
+        this.context.fillText(String.fromCharCode(line[column - n + i]), x+(i*11), y+16);
     }
 
 };
-
 Terminal.prototype.GetSpan = function(c, line, idx, n) {
     var html = "<span style=\"color:" + Colors[c & 0x1F] + ";background-color:" + Colors[(c >> 8) & 0x1F] + "\">";
     for(var i=0; i<n; i++) {
