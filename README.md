@@ -28,8 +28,11 @@ Origins: Word play on emscripten, embiggen, emulating, adapting
 ![jor1k](http://www.oldbsd.org/ss.png)
 
 * Automated installation of UNIX v6 on [oldbsd](http://www.oldbsd.org)
-* Flat [VT100] glass tty (http://www.hit2000.nl/jor1k/demos/crt2.html)
+* Flat [vt100] glass tty (http://www.hit2000.nl/jor1k/demos/crt2.html)
 * Bulged / pinched [ADM-3a] (http://www.hit2000.nl/jor1k/demos/crt.html)
-* Experiment of the [day] (www.minac.nl/j/jor1k/demos/2simple.html) - 2 model 33 teletypes
+
+![jor1k](http://www.oldbsd.org/ss2.png)
+
+* Experiment of the [day] (http://www.minac.nl/l/jor1k/demos/2ttys.html) - 2 model 33 teletypes
 * This fork. Anything outside demos/2ttys.html will break.
 
