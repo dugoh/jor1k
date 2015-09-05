@@ -23,7 +23,7 @@
 	]},
 	{ "name":"home", "mode":"40755", "child":[
 		{ "name":"user", "mode":"42755", "uid":1000, "gid":1000, "child":[
-			{ "name":".profile", "mode":"100644", "size":473,"load":1, "gid":1000, "uid":1000, "src":"root/profile"}
+			{ "name":".profile", "mode":"100644", "size":17,"load":1, "gid":1000, "uid":1000, "src":"root/profile"}
 		]}
 	]},
 	{ "name":"usr", "mode":"40755", "child":[

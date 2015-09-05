@@ -791,16 +791,28 @@ module.exports = TerminalInput;
 var UTF8 = require('../../lib/utf8');
 var message = require('../messagehandler');
 
+//var Colors = new Array(
+//    // standard colors
+//    "#000000", "#BB0000", "#00BB00", "#BBBB00",
+//    "#0000BB", "#BB00BB", "#00BBBB", "#BBBBBB",
+//    // brighter colors
+//    "#555555", "#FF5555", "#55FF55", "#FFFF55",
+//    "#5555FF", "#FF55FF", "#55FFFF", "#FFFFFF",
+//    // dimmed colors
+//    "#000000", "#770000", "#007700", "#777700",
+//    "#000077", "#770077", "#007777", "#777777"
+//);
+
 var Colors = new Array(
     // standard colors
-    "#000000", "#BB0000", "#00BB00", "#BBBB00",
-    "#0000BB", "#BB00BB", "#00BBBB", "#BBBBBB",
+    "#FAFAD2", "#9B0000", "#90BB00", "#9BBB00",
+    "#9000BB", "#9B00BB", "#90BBBB", "#000000",
     // brighter colors
-    "#555555", "#FF5555", "#55FF55", "#FFFF55",
-    "#5555FF", "#FF55FF", "#55FFFF", "#FFFFFF",
+    "#955555", "#9F5555", "#95FF55", "#9FFF55",
+    "#9555FF", "#9F55FF", "#95FFFF", "#9FFFFF",
     // dimmed colors
-    "#000000", "#770000", "#007700", "#777700",
-    "#000077", "#770077", "#007777", "#777777"
+    "#900000", "#970000", "#907700", "#977700",
+    "#900077", "#970077", "#907777", "#977777"
 );
 
 // constructor
@@ -859,7 +871,7 @@ function Terminal(nrows, ncolumns, elemId) {
         this.color[i]  = new Uint16Array(this.ncolumns);
 
         for (var j = 0; j < this.ncolumns; j++) {
-            this.screen[i][j] = 0x20;
+            this.screen[i][j] = 0x1;
             this.color[i][j] = this.attr_color;
         }
     }
@@ -982,6 +994,7 @@ Terminal.prototype.UpdateRowCanvas = function(row) {
     }
 
 };
+
 Terminal.prototype.GetSpan = function(c, line, idx, n) {
     var html = "<span style=\"color:" + Colors[c & 0x1F] + ";background-color:" + Colors[(c >> 8) & 0x1F] + "\">";
     for(var i=0; i<n; i++) {
