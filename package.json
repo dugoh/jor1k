@@ -29,7 +29,7 @@
     "emulation"
   ],
   "author": "Sebastian Macke",
-  "license": "simplified BSD",
+  "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/s-macke/jor1k/issues"
   },
