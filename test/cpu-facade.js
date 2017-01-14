@@ -5,7 +5,7 @@ global.onmessage = null;
     console.log(arguments);
 }*/
 var RAM = require('../js/worker/ram');
-var CPU = require('../js/worker/cpu');
+var CPU = require('../js/worker/or1k');
 
 var Lab = require('lab');
 var lab = exports.lab = Lab.script();
