@@ -50,7 +50,7 @@
   },
   "scripts": {
     "test": "lab --ignore onmessage -v test/cpu-facade.js",
-    "test": "mocha --timeout 10000",
+    "test": "mocha --timeout 10000 test/basic.js",
     "postinstall": "./compile"
   },
   "engines": {
