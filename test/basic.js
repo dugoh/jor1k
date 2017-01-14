@@ -39,7 +39,7 @@ describe("testing javascript in the browser", function() {
     terminal.click();
 
     terminal.getText().then(function(txt) {
-      assert.equal(txt, "somestring");
+      assert.equal(txt, "Terminal uses canvas");
       done();
     });
   });
