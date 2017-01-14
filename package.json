@@ -44,9 +44,13 @@
     "browserify": "latest",
     "expect": "latest",
     "lab": "latest"
+    "mocha": "latest",
+    "selenium-webdriver": "latest"
+
   },
   "scripts": {
     "test": "lab --ignore onmessage -v test/cpu-facade.js",
+    "test": "mocha --timeout 10000"
     "postinstall": "./compile"
   },
   "engines": {
