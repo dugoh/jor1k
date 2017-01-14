@@ -37,12 +37,16 @@ describe("testing javascript in the browser", function() {
     var terminal = this.browser.findElement(webdriver.By.id('tty0'));
 
     terminal.click();
-
+    
+    javascriptExecutor js = ((JavascriptExecutor) driver);
+    js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    
     flow.execute(
         function () { return webdriver.promise.delayed(5 * 1000); });
 
     terminal.getText().then(function(txt) {
-      assert.equal(txt, "Terminal uses canvas");
+        assert.equal(txt, "Terminal uses canvas");
+              
       done();
     });
   });
