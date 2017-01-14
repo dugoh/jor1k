@@ -41,8 +41,8 @@
   "dependencies": {},
   "devDependencies": {
     "jshint": "latest",
-    "browserify": "^8.0.3",
-    "expect": "^1.3.0",
+    "browserify": "latest",
+    "expect": "latest",
     "lab": "latest"
   },
   "scripts": {
@@ -50,6 +50,6 @@
     "postinstall": "./compile"
   },
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 4"
   }
 }
