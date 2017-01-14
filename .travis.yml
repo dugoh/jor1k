@@ -6,9 +6,9 @@ before_script:
   - sleep 2
 node_js:
 - '7.4'
-- '6'
-- '5'
-- '4'
+#- '6'
+#- '5'
+#- '4'
 env:
   global:
   - secure: qHs4BTHeAQ6bt0H/jImkVddDVDMzG0dAj6qSovc0GZXE+IdNeSCyfWVyvZQ/GdKq1pXENms0LaK6y5VGC3fPE7WT6iKvQKDtB5MSX8s+ZvRg24+z8QkAaTVA/UG/Dmk2fu3rSolNh9RZcDhW6hkFG+3T5in8obK2bIl6Yv3UFFol78vsuR4y898lH00oly3NhSP3qwOczeAC/PBFW8HOfcrYrXVu7vY2S9zJL13PAjDxF2mLl7pkku4fdwgceHEOhXbfua7Nx7WhZDdEkNCKUuSL2+E4YkYx26pK6PRwTwGpareWz7aDMv2zkSRJ1WOaPot3jaWYsekGPZxME54wFB1si1PM//1UNqAcNKo/Llv30i64T9Axj5srn5qvlRWfLkYEIj9NV60defrW3Z1A88zypCTRQv5Cmggm8otNbgTeG4awZ1WZZisu1ySWNx0Us+yeOBb8XX+1JMhiLPWRqkGwWggLh+NYnDaTnalajh9lxABjiJeygI8Z3Chd2Xu9XDpVwzde0pjerAlOTvz0LHmHtGvnNqfTWe42SUX+7alL8XsGMm2a/rrEKKi+uWnGM9bbnIDeb+Lt5+Gwo7g6jSAFmL6bqiW5Quu4L01mB1CtUoJ7wIYUML2GuH5g6Po4heudC+eTENAhHf1xUwW5EVLIwfHpsabo3u7otqp4haI=

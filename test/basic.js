@@ -28,7 +28,7 @@ describe("testing javascript in the browser", function() {
   });
 
   it("should handle a click", function(done) {
-    var terminal = this.browser.findElement(webdriver.By.id('tty'));
+    var terminal = this.browser.findElement(webdriver.By.id('tty0'));
 
     terminal.click();
 
