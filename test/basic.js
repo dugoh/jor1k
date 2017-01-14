@@ -28,6 +28,12 @@ describe("testing javascript in the browser", function() {
   });
 
   it("should handle a click", function(done) {
+    
+        var flow = webdriver.promise.controlFlow();
+        flow.execute(
+            function () { return webdriver.promise.delayed(30 * 1000); });
+
+    
     var terminal = this.browser.findElement(webdriver.By.id('tty0'));
 
     terminal.click();
