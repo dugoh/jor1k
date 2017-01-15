@@ -41,11 +41,12 @@ describe("testing javascript in the browser", function() {
     //this.browser.sleep(5000);
     //this.browser.window.scrollTo(0, 0);
     this.browser.sleep(20000);
-    var terminal = this.browser.findElement(webdriver.By.id('tty0'));
-    terminal.click();
-    terminal.sendKeys('uname -a');
-    terminal.sendKeys(webdriver.Key.ENTER);
-    //this.browser.findElement(webdriver.By.id('tty0')).SendKeys(webdriver.Key.ENTER);
+    //var terminal = this.browser.findElement(webdriver.By.id('tty0'));
+    //terminal.click();
+    //terminal.sendKeys('uname -a');
+    //terminal.sendKeys(webdriver.Key.ENTER);
+    this.browser.findElement(webdriver.By.id('tty0')).sendKeys('uname -a');
+    this.browser.findElement(webdriver.By.id('tty0')).sendKeys(webdriver.Key.ENTER);
     this.browser.sleep(3000);
     this.browser.findElement(webdriver.By.id('tty0')).getText().then(function(txt) {
       assert.equal(txt, "Terminal uses canvas");
