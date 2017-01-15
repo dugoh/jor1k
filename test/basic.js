@@ -45,6 +45,7 @@ describe("testing javascript in the browser", function() {
     //terminal.click();
     //terminal.sendKeys('uname -a');
     //terminal.sendKeys(webdriver.Key.ENTER);
+    this.browser.findElement(webdriver.By.id('tty0')).click();
     this.browser.findElement(webdriver.By.id('tty0')).sendKeys('uname -a');
     this.browser.findElement(webdriver.By.id('tty0')).sendKeys(webdriver.Key.ENTER);
     this.browser.sleep(3000);
