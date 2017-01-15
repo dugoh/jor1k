@@ -28,26 +28,19 @@ describe("testing javascript in the browser", function() {
   });
 
   it("should handle a click", function(done) {
-    //
-    this.browser.sleep(5000);
+    //this.browser.sleep(5000);
     //var terminal = this.browser.findElement(webdriver.By.id('tty0'));
-    
-    //
-    this.browser.sleep(5000);
-    
-    //
-    this.browser.sleep(5000);
-
+    //this.browser.sleep(5000);
     //terminal.click();
     //this.browser.SwitchTo().ActiveElement().SendKeys("uname -a");
     //terminal.click();
     //this.browser.SwitchTo().ActiveElement().SendKeys("webdriver.Key.ENTER");
-
     //this.browser.sleep(5000);
     //terminal.sendKeys("uname -a");
     //terminal.sendKeys(webdriver.Key.ENTER);
     //this.browser.sleep(5000);
     //this.browser.window.scrollTo(0, 0);
+    this.browser.sleep(20000);
     this.browser.findElement(webdriver.By.id('tty0')).getText().then(function(txt) {
       assert.equal(txt, "Terminal uses canvas");
       done();
