@@ -30,7 +30,7 @@ describe("testing javascript in the browser", function() {
   it("should handle a click", function(done) {
     var terminal = this.browser.findElement(webdriver.By.id('tty0'));
     terminal.click();
-    window.scrollTo(0, 0);
+    this.browser.window.scrollTo(0, 0);
     terminal.getText().then(function(txt) {
       assert.equal(txt, "Terminal uses canvas");
       done();
