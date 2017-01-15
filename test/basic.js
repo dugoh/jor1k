@@ -32,8 +32,13 @@ describe("testing javascript in the browser", function() {
     var terminal = this.browser.findElement(webdriver.By.id('tty0'));
     
     this.browser.sleep(5000);
+    this.browser.sleep(5000);
+
     terminal.click();
-    
+    browser.SwitchTo().ActiveElement().SendKeys("uname -a");
+    terminal.click();
+    browser.SwitchTo().ActiveElement().SendKeys("webdriver.Key.ENTER");
+
     this.browser.sleep(5000);
     terminal.sendKeys("uname -a");
     terminal.sendKeys(webdriver.Key.ENTER);
