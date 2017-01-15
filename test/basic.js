@@ -41,7 +41,10 @@ describe("testing javascript in the browser", function() {
     //this.browser.sleep(5000);
     //this.browser.window.scrollTo(0, 0);
     this.browser.sleep(20000);
-    this.browser.findElement(webdriver.By.id('tty0')).SendKeys('uname -a');
+    var terminal = this.browser.findElement(webdriver.By.id('tty0'));
+    terminal.click();
+    terminal.SendKeys('uname -a');
+    terminal.sendKeys(webdriver.Key.ENTER);
     //this.browser.findElement(webdriver.By.id('tty0')).SendKeys(webdriver.Key.ENTER);
     this.browser.sleep(3000);
     this.browser.findElement(webdriver.By.id('tty0')).getText().then(function(txt) {
