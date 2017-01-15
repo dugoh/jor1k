@@ -34,7 +34,7 @@ describe("testing javascript in the browser", function() {
     
     //terminal.click();
     terminal.sendKeys("uname -a");
-    terminal.sendKeys(WebDriver.Key.ENTER);
+    terminal.sendKeys(webdriver.Key.ENTER);
     this.browser.sleep(5000);
     //this.browser.window.scrollTo(0, 0);
     terminal.getText().then(function(txt) {
