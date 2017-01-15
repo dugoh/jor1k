@@ -28,11 +28,13 @@ describe("testing javascript in the browser", function() {
   });
 
   it("should handle a click", function(done) {
+    this.browser.sleep(15000);
+
     var terminal = this.browser.findElement(webdriver.By.id('tty0'));
+    
     //terminal.click();
-    this.browser.sleep(10000);
     terminal.sendKeys("uname -a");
-    terminal.sendKeys(RETURN);
+    terminal.sendKeys(WebDriver.Key.ENTER);
     this.browser.sleep(5000);
     //this.browser.window.scrollTo(0, 0);
     terminal.getText().then(function(txt) {
