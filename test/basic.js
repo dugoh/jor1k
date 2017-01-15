@@ -35,13 +35,13 @@ describe("testing javascript in the browser", function() {
     this.browser.sleep(5000);
 
     terminal.click();
-    browser.SwitchTo().ActiveElement().SendKeys("uname -a");
+    this.browser.SwitchTo().ActiveElement().SendKeys("uname -a");
     terminal.click();
-    browser.SwitchTo().ActiveElement().SendKeys("webdriver.Key.ENTER");
+    this.browser.SwitchTo().ActiveElement().SendKeys("webdriver.Key.ENTER");
 
     this.browser.sleep(5000);
-    terminal.sendKeys("uname -a");
-    terminal.sendKeys(webdriver.Key.ENTER);
+    //terminal.sendKeys("uname -a");
+    //terminal.sendKeys(webdriver.Key.ENTER);
     this.browser.sleep(5000);
     //this.browser.window.scrollTo(0, 0);
     terminal.getText().then(function(txt) {
