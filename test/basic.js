@@ -11,7 +11,7 @@ describe("testing javascript in the browser", function() {
         build: process.env.TRAVIS_BUILD_NUMBER,
         username: process.env.SAUCE_USERNAME,
         accessKey: process.env.SAUCE_ACCESS_KEY,
-        browserName: "chrome"
+        browserName: "firefox"
       }).build();
     } else {
       this.browser = new webdriver.Builder()
