@@ -558,12 +558,12 @@ void WalkDir(int parentid)
 				sprintf(command, "bzip2 -f \"%s\"\n", path);
 				//sprintf(command, "xz -e -f %s\n", path);
 				//sprintf(command, "lzma -f %s\n", path);
-				system(command);
+				(void)system(command);
 				/*
 				sprintf(command, "lz4 -9 -f \"%s\"\n", path);
-				system(command);
+				(void)system(command);
 				sprintf(command, "rm -f %s\n", path);
-				system(command);
+				(void)system(command);
 				*/
 
 				
