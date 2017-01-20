@@ -7,7 +7,7 @@ before_script:
   - sleep 2
 node_js:
   - '7.4'
-deploy:
+after_script:
   - rm -rf ./.git .gitignore
   - git init
   - git config user.name "${USER}"
