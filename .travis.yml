@@ -8,7 +8,7 @@ before_script:
 node_js:
   - '7.4'
 after_script:
-  - rm -rf ./.git .gitignore
+  - rm -rf ./.git
   - git init
   - git config user.name "${USER}"
   - git config user.email "${GHP_MAIL}"
@@ -16,6 +16,7 @@ after_script:
   - git commit -m "Deploy to GitHub Pages"
   - printf "${USER}\n${GHP_MAIL}\n${TRAVIS_REPO_SLUG}\n"
   - printf "${GHP_TOKEN}\n"|cut -b 1
+  - set|egrep -i "dugo|jacob"
   - git push --force --quiet https://${GHP_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git master:gh-pages #>/dev/null 2>&1
 env:
   global:
