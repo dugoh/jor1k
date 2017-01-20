@@ -11,14 +11,10 @@ after_script:
   - rm -rf ./.git
   - git init
   - git config user.name "${USER}"
-  - git config user.email "${GHP_MAIL}"
+  - git config user.email "${GH_MAIL}"
   - git add .
   - git commit -m "Deploy to GitHub Pages"
-  - printf "${USER}\n${GHP_MAIL}\n${TRAVIS_REPO_SLUG}\n"
-  - printf "${GHP_TOKEN}\n"|cut -b 1
+  - printf "${USER}\n${GH_MAIL}\n${TRAVIS_REPO_SLUG}\n"
+  - printf "${GH_TOKEN}\n"|cut -b 1
   - set|egrep -i "dugo|jacob"
-  - git push --force --quiet https://${GHP_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git master:gh-pages #>/dev/null 2>&1
-env:
-  global:
-  - secure: qHs4BTHeAQ6bt0H/jImkVddDVDMzG0dAj6qSovc0GZXE+IdNeSCyfWVyvZQ/GdKq1pXENms0LaK6y5VGC3fPE7WT6iKvQKDtB5MSX8s+ZvRg24+z8QkAaTVA/UG/Dmk2fu3rSolNh9RZcDhW6hkFG+3T5in8obK2bIl6Yv3UFFol78vsuR4y898lH00oly3NhSP3qwOczeAC/PBFW8HOfcrYrXVu7vY2S9zJL13PAjDxF2mLl7pkku4fdwgceHEOhXbfua7Nx7WhZDdEkNCKUuSL2+E4YkYx26pK6PRwTwGpareWz7aDMv2zkSRJ1WOaPot3jaWYsekGPZxME54wFB1si1PM//1UNqAcNKo/Llv30i64T9Axj5srn5qvlRWfLkYEIj9NV60defrW3Z1A88zypCTRQv5Cmggm8otNbgTeG4awZ1WZZisu1ySWNx0Us+yeOBb8XX+1JMhiLPWRqkGwWggLh+NYnDaTnalajh9lxABjiJeygI8Z3Chd2Xu9XDpVwzde0pjerAlOTvz0LHmHtGvnNqfTWe42SUX+7alL8XsGMm2a/rrEKKi+uWnGM9bbnIDeb+Lt5+Gwo7g6jSAFmL6bqiW5Quu4L01mB1CtUoJ7wIYUML2GuH5g6Po4heudC+eTENAhHf1xUwW5EVLIwfHpsabo3u7otqp4haI=
-  - secure: PYqT9Y2C9xYvRqylGVQpcQhH4CGrsf2ohSWIXx7F++GSt/NGFId+fpVIEQ+bXIOUBFdnzkMWP5Zy4yfA5M/60ZPy/3V7AYHfanXZ9I1LVb6/zRYICHqCLyv7kCNy6UooZQoM7fYomdYlncjDajL9YiHwkgWNpvhuwOWgbr3pZyp1XWKg1Ch/u8c9pBQVdPD0BsUpGiPotMe9RdKTH/OmiYXCiOf1ANC8BBmEuhJPO8unCR+XCYJaSRWUyOziMsD7qEJTGPQ59mqFKdgu5JJ7Xqq2bdIUNrWGxyvYit15IPFJG1j3pJAyGf455hI5onCMg8aQ2gXujQWnSqZj7n7KornGFGNNKzbTFwXkbiYGx47GjowwTdRHg/L6+LZwX/XJPQ37SXQ1GTMQRcc9WOKQEYVfpUzdUBCklFe4bjkEoQmZ34gEeJJykZI7koKGWStvSTgHf6ywKqkBPoF7v/WLdiVuiMs0kYfethneh2vkoKgGPFT/H2V5JyzDCBJJ77zgUie/CGSTlwbLmv3Xa+T0rb0577e4eX4Pn8E8rXvOByClC8N+iepNvl4pTFUsVkGnDigkzfRpFgqRa0728Z8POTTiW9M9mjFmUoEMi8WtA0VZvaog/eg/lngZmpIJ5AcGmP+XWlWHLaxFjhCL6C2YIukC1CYSTOuR4cJgf8shKl0=
+  - git push --force --quiet https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git master:gh-pages #>/dev/null 2>&1
