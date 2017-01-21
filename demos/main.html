@@ -21,9 +21,8 @@
                 <td style="vertical-align: top">
                     <table>
                     <tr><td>
-                    <canvas id="tty" class="screen" width="640" height="384">
-                        Terminal uses canvas
-                    </canvas>
+                    <table id="tty" class="terminal" cellpadding="0" cellspacing="0">
+                    </table>
                     </td></tr>
                     <tr><td>
                     <span style="float: left" >
@@ -123,7 +122,7 @@
             
         </div>
 
-    <script src="../bin/jor1k-master-min.js"></script> 
+    <script src="jor1k-master-min.js"></script> 
 
 <script>
 var Jor1k = require("Jor1k");
@@ -167,20 +166,45 @@ function RandomString(length) {
     return result;
 }
 
+// from https://css-tricks.com/snippets/javascript/get-url-variables/
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return decodeURIComponent(pair[1]);}
+       }
+       return(false);
+}
+
 function Start() {
 
-    var userid = RandomString(10);
+    var pushState = false, loadUserData = false;
+    var userid = getQueryVariable("user");
+    if (userid == false) {
+       userid = RandomString(10);
+       pushState = true;
+    } else {
+       loadUserData = true;
+    }
+    // allow specifying relay URL via querystring
+    var relayURL = getQueryVariable("relayURL")
+    if (relayURL == false) {
+        relayURL = "wss://relay.widgetry.org/";
+        pushState = true;
+    }
 
     jor1kparameters = {
         system: {
-            kernelURL: "or1k/vmlinux.bin.bz2", // kernel image
+            kernelURL: "vmlinux.bin.bz2", // kernel image
             memorysize: 32, // in MB, must be a power of two
             cpu: "asm", // short name for the cpu to use
             ncores: 1,
         },
         fs: {
             basefsURL: "basefs.json", // json file with the basic filesystem configuration.
-            extendedfsURL: "../../jor1k-sysroot/fs.json", // json file with extended filesystem informations. Loaded after the basic filesystem has been loaded.
+            extendedfsURL: "../fs.json", // json file with extended filesystem informations. Loaded after the basic filesystem has been loaded.
             earlyload: [], // list of files which should be loaded immediately after they appear in the filesystem
             lazyloadimages: [
             ] // list of automatically loaded images after the basic filesystem has been loaded
@@ -191,42 +215,34 @@ function Start() {
         clipboardid: "clipboard",  // input id for the clipboard
         statsid: "stats",          // object id for the statistics test
         fps: 10, // update interval of framebuffer
-        relayURL: "wss://relay.widgetry.org/", // relay url for the network
+        relayURL: relayURL, // relay url for the network
         userid: userid, // unique user id string. Empty, choosen randomly, from a url, or from a cookie.
-        syncURL: "http://jor1k.com/sync/upload.php", // url to sync a certain folder
-        path: "../bin/",
+        syncURL: "//jor1k.com/sync/upload.php", // url to sync a certain folder
+        path: "../sys/or1k/",
     }
 
     // --------------------------------------------------------
-    // parse URL
-    var loc = document.URL.split('?');
-    userid = "";
-    if (loc[1]) {
-        var params = loc[1].split('&');
-        for(var i=0; i<params.length; i++) {
-            if (params[i].substr(0,4) == "user") {
-                userid = params[i].split('=')[1];
-                jor1kparameters.userid = userid;
-                jor1kparameters.fs.lazyloadimages.push("http://jor1k.com/sync/tarballs/"+userid+".tar.bz2");
-            }
-            if (params[i].substr(0,3) == "cpu") {
-                jor1kparameters.system.cpu = params[i].split('=')[1];
-                if (jor1kparameters.system.cpu == "smp") {
-                    console.log("Load smp kernel");
-                    jor1kparameters.system.kernelURL = "or1k/vmlinuxsmp.bin.bz2";
-                    jor1kparameters.system.ncores = 4;
-                }
-            }
-            if (params[i].substr(0,1) == "n") {
-                jor1kparameters.system.ncores = params[i].split('=')[1];
-            }
-        }
+    if (loadUserData)
+        jor1kparameters.fs.lazyloadimages.push("sync/tarballs/"+userid+".tar.bz2");
+
+    var nCores = getQueryVariable("n");
+    if (nCores != false) {
+       jor1kparameters.system.ncores = nCores;
+    } else {
+       pushState = true;
     }
-    if (userid == "") {
-        if (loc[1])
-              window.history.pushState([], "", location + "&user="+jor1kparameters.userid);
-          else
-              window.history.pushState([], "", location + "?user="+jor1kparameters.userid);
+    var cpu = getQueryVariable("cpu");
+    if (cpu != false) {
+       jor1kparameters.system.cpu = cpu;
+       if (jor1kparameters.system.cpu == "smp") {
+             console.log("Load smp kernel");
+             jor1kparameters.system.kernelURL = "vmlinuxsmp.bin.bz2";
+       }
+    } else {
+       pushState = true;
+    }
+    if (pushState) {
+        window.history.pushState([], "", "?user="+encodeURIComponent(jor1kparameters.userid)+"&cpu="+encodeURIComponent(jor1kparameters.system.cpu)+"&n="+encodeURIComponent(jor1kparameters.system.ncores)+"&relayURL="+encodeURIComponent(relayURL));
     }
 
     // --------------------------------------------------------
