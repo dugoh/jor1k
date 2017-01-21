@@ -3,7 +3,7 @@ addons:
 language: node_js
 before_script:
   # fetch latest kernel from the tcb repo 
-  - wget -O bin/or1k/vmlinux.bin.bz2 https://dugoh.github.io/tcb/vmlinux.bin.bz2
+  - wget -O sys/or1k/vmlinux.bin.bz2 https://dugoh.github.io/tcb/vmlinux.bin.bz2
   - python -m SimpleHTTPServer >/dev/null 2>&1 &
   - sleep 2
 node_js:
