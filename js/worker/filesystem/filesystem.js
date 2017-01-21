@@ -5,14 +5,14 @@
 
 "use strict";
 
-var TAR = require('./tar.js');
-var FSLoader = require('./fsloader.js');
-var utils = require('../utils.js');
-var bzip2 = require('../bzip2.js');
-var marshall = require('../dev/virtio/marshall.js');
-var UTF8 = require('../../lib/utf8.js');
+var TAR = require('./tar');
+var FSLoader = require('./fsloader');
+var utils = require('../utils');
+var bzip2 = require('../bzip2');
+var marshall = require('../dev/virtio/marshall');
+var UTF8 = require('../../lib/utf8');
 var message = require('../messagehandler');
-var LazyUint8Array = require("./lazyUint8Array.js");
+var LazyUint8Array = require("./lazyUint8Array");
 
 var S_IRWXUGO = 0x1FF;
 var S_IFMT = 0xF000;
@@ -54,13 +54,51 @@ function FS() {
     this.userinfo = [];
 
     this.watchFiles = {};
+    this.watchDirectories = {};
 
     message.Register("LoadFilesystem", this.LoadFilesystem.bind(this) );
     message.Register("MergeFile", this.MergeFile.bind(this) );
+    message.Register("DeleteNode", this.DeleteNode.bind(this) );
+    message.Register("DeleteDirContents", this.RecursiveDelete.bind(this) );
+    message.Register("CreateDirectory", 
+        function(newDirPath){
+            var ids = this.SearchPath(newDirPath);
+            if(ids.id == -1 && ids.parentid != -1)
+                this.CreateDirectory(ids.name, ids.parentid);
+        }.bind(this)
+    );
+    message.Register("Rename",
+        function(info) {
+            var oldNodeInfo = this.SearchPath(info.oldPath);
+            var newNodeInfo = this.SearchPath(info.newPath);
+            
+            // old node DNE or new node has invalid directory path
+            if(oldNodeInfo.id == -1 || newNodeInfo.parentid == -1) 
+                return;
+               
+            if(newNodeInfo.id==-1){ //create
+                //parent must be directory
+                if(((this.inodes[newNodeInfo.parentid].mode)&S_IFMT) != S_IFDIR)
+                    return;
+                    
+                this.Rename(this.inodes[oldNodeInfo.id].parentid, this.inodes[oldNodeInfo.id].name, 
+                                newNodeInfo.parentid, newNodeInfo.name);
+            }
+            else { //overwrite 
+                this.Rename(this.inodes[oldNodeInfo.id].parentid, this.inodes[oldNodeInfo.id].name, 
+                                this.inodes[newNodeInfo.id].parentid, this.inodes[newNodeInfo.id].name);
+            }                
+        }.bind(this)
+    );
     message.Register("WatchFile",
         function(file) {
             //message.Debug("watching file: " + file.name);
             this.watchFiles[file.name] = true;
+        }.bind(this)
+    );
+    message.Register("WatchDirectory",
+        function(file) {
+            this.watchDirectories[file.name] = true;
         }.bind(this)
     );
     //message.Debug("registering readfile on worker");
@@ -171,23 +209,23 @@ FS.prototype.CheckEarlyload = function(path)
 // The filesystem is responsible to add the correct time. This is a hack
 // Have to find a better solution.
 FS.prototype.AppendDateHack = function(idx) {
-    if (this.GetFullPath(idx) != "etc/init.d/rcS") return; 
+    if (this.GetFullPath(idx) != "home/user/.profile") return;
     var inode = this.inodes[idx];
     var date = new Date();
     var datestring = 
         "\ndate -s \"" + 
-        date.getFullYear() + 
+        date.getUTCFullYear() + 
         "-" + 
-        (date.getMonth()+1) + 
+        (date.getUTCMonth()+1) + 
         "-" + 
-        date.getDate() + 
+        date.getUTCDate() + 
         " " + 
-        date.getHours() +
+        date.getUTCHours() +
         ":" + 
-        date.getMinutes() +
+        date.getUTCMinutes() +
         ":" + 
-        date.getSeconds() +
-        "\"\n";
+        date.getUTCSeconds() +
+        "\" &>/dev/null\n";
     var size = inode.size;
     this.ChangeSize(idx, size+datestring.length);
     for(var i=0; i<datestring.length; i++) {
@@ -246,10 +284,7 @@ FS.prototype.LoadFile = function(idx) {
             inode.data = new Uint8Array(buffer);
             if (inode.size != inode.data.length) message.Warning("Size wrong for uncompressed non-lazily loaded file: " + inode.name);
             inode.size = inode.data.length; // correct size if the previous was wrong. 
-            inode.status = STATUS_OK;
-            if (inode.name == "rcS") {
-                this.AppendDateHack(idx);
-            }
+            inode.status = STATUS_OK;            
             this.filesinloadingqueue--;
             this.HandleEvent(idx);            
         }.bind(this);
@@ -324,6 +359,7 @@ FS.prototype.CreateDirectory = function(name, parentid) {
     }
     x.qid.type = S_IFDIR >> 8;
     this.PushInode(x);
+    this.NotifyListeners(this.inodes.length-1, 'newdir');
     return this.inodes.length-1;
 }
 
@@ -336,6 +372,7 @@ FS.prototype.CreateFile = function(filename, parentid) {
     x.qid.type = S_IFREG >> 8;
     x.mode = (this.inodes[parentid].mode & 0x1B6) | S_IFREG;
     this.PushInode(x);
+    this.NotifyListeners(this.inodes.length-1, 'newfile');
     return this.inodes.length-1;
 }
 
@@ -397,6 +434,11 @@ FS.prototype.OpenInode = function(id, mode) {
         this.LoadFile(id);
         return false;
     }
+
+    if (inode.name == ".profile") {
+        this.AppendDateHack(id);
+    }
+
     return true;
 }
 
@@ -417,6 +459,7 @@ FS.prototype.Rename = function(olddirid, oldname, newdirid, newname) {
         return true;
     }
     var oldid = this.Search(olddirid, oldname);
+    var oldpath = this.GetFullPath(oldid);
     if (oldid == -1) {
         return false;
     }
@@ -449,15 +492,14 @@ FS.prototype.Rename = function(olddirid, oldname, newdirid, newname) {
 
     this.inodes[olddirid].updatedir = true;
     this.inodes[newdirid].updatedir = true;
+
+    this.NotifyListeners(idx, "rename", {oldpath: oldpath});
+    
     return true;
 }
 
 FS.prototype.Write = function(id, offset, count, GetByte) {
-    var path = this.GetFullPath(id);
-    if (this.watchFiles[path] == true) {
-      //message.Debug("sending WatchFileEvent for " + path);
-      message.Send("WatchFileEvent", path);
-    }
+    this.NotifyListeners(id, 'write');
     var inode = this.inodes[id];
 
     if (inode.data.length < (offset+count)) {
@@ -517,6 +559,7 @@ FS.prototype.FindPreviousID = function(idx) {
 }
 
 FS.prototype.Unlink = function(idx) {
+    this.NotifyListeners(idx, 'delete');
     if (idx == 0) return false; // root node cannot be deleted
     var inode = this.GetInode(idx);
     //message.Debug("Unlink " + inode.name);
@@ -637,6 +680,54 @@ FS.prototype.MergeFile = function(file) {
     }
     this.inodes[ids.id].data = file.data;
     this.inodes[ids.id].size = file.data.length;
+}
+
+
+FS.prototype.RecursiveDelete = function(path) {
+    var toDelete = []
+    var ids = this.SearchPath(path);
+    if (ids.parentid == -1 || ids.id == -1) return;
+    
+    this.GetRecursiveList(ids.id, toDelete);
+
+    for(var i=toDelete.length-1; i>=0; i--)
+        this.Unlink(toDelete[i]);
+
+}
+
+FS.prototype.DeleteNode = function(path) {
+    var ids = this.SearchPath(path);
+    if (ids.parentid == -1 || ids.id == -1) return;
+    
+    if ((this.inodes[ids.id].mode&S_IFMT) == S_IFREG){
+        this.Unlink(ids.id);
+        return;
+    }
+    if ((this.inodes[ids.id].mode&S_IFMT) == S_IFDIR){
+        var toDelete = []
+        this.GetRecursiveList(ids.id, toDelete);
+        for(var i=toDelete.length-1; i>=0; i--)
+            this.Unlink(toDelete[i]);
+        this.Unlink(ids.id);
+        return;
+    }
+}
+
+FS.prototype.NotifyListeners = function(id, action, info) {
+    if(info==undefined)
+        info = {};
+
+    var path = this.GetFullPath(id);
+    if (this.watchFiles[path] == true && action=='write') {
+      message.Send("WatchFileEvent", path);
+    }
+    for (var directory in this.watchDirectories) {
+        if (this.watchDirectories.hasOwnProperty(directory)) {
+            var indexOf = path.indexOf(directory)
+            if(indexOf == 0 || indexOf == 1)
+                message.Send("WatchDirectoryEvent", {path: path, event: action, info: info});         
+        }
+    }
 }
 
 

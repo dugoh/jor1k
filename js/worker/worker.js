@@ -2,5 +2,8 @@
 // -------------------- Worker ---------------------
 // -------------------------------------------------
 
-var System = require('./system.js');
-var sys = new System();
+var message = require('./messagehandler');
+var System = require('./system');
+
+new System();
+message.Send("WorkerReady", 0);

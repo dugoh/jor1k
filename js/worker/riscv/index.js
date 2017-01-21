@@ -6,12 +6,11 @@
 var message = require('../messagehandler'); // global variable
 var utils = require('../utils');
 var imul = require('../imul');
-var mul = require('../mul');
 
 // CPUs
-var SafeCPU = require('./safecpu.js');
-var FastCPU = require('./fastcpu.js');
-var DynamicCPU = require('./dynamiccpu.js');
+var SafeCPU = require('./safecpu');
+var FastCPU = require('./fastcpu');
+var DynamicCPU = require('./dynamiccpu');
 
 var stdlib = {
     Int32Array : Int32Array,
@@ -29,8 +28,7 @@ function createCPU(cpuname, ram, htif, heap, ncores) {
     var foreign = {
         DebugMessage: message.Debug,
         abort : message.Abort,
-        imul : imul,
-        mul : mul,
+        imul : Math.imul || imul,
         MathAbs : Math.abs,
         Read32 : ram.Read32Little.bind(ram),
         Write32 : ram.Write32Little.bind(ram),
@@ -46,8 +44,6 @@ function createCPU(cpuname, ram, htif, heap, ncores) {
         ReadFromHost : htif.ReadFromHost.bind(htif),
         WriteToHost : htif.WriteToHost.bind(htif),
         WriteFromHost : htif.WriteFromHost.bind(htif),
-        //HandleRequest: htif.HandleRequest.bind(htif),
-        IsQueueEmpty: htif.IsQueueEmpty.bind(htif)
     };
 
     if (cpuname === "safe") {

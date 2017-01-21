@@ -8,9 +8,9 @@ var toHex = require('../utils').ToHex;
 var imul = require('../imul');
 
 // CPUs
-var FastCPU = require('./fastcpu.js');
-var SafeCPU = require('./safecpu.js');
-var SMPCPU = require('./smpcpu.js');
+var FastCPU = require('./fastcpu');
+var SafeCPU = require('./safecpu');
+var SMPCPU = require('./smpcpu');
 
 // The asm.js ("Fast") and SMP cores must be singletons
 //  because of Firefox limitations.
@@ -29,7 +29,7 @@ function createCPUSingleton(cpuname, ram, heap, ncores) {
     var foreign = {
         DebugMessage: message.Debug,
         abort : message.Abort,
-        imul : imul,
+        imul : Math.imul || imul,
         Read32 : ram.Read32Big.bind(ram),
         Write32 : ram.Write32Big.bind(ram),
         Read16 : ram.Read16Big.bind(ram),

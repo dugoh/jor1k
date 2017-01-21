@@ -1,6 +1,6 @@
-var message = require('../messagehandler.js');
+var message = require('../messagehandler');
 var download = require('../../lib/download');
-var utils = require('../utils.js');
+var utils = require('../utils');
 
 "use strict";
 
@@ -56,14 +56,41 @@ Filesystem.prototype.MergeFile = function(fileName, data) {
   message.Send("MergeFile", {name: fileName, data: stringToUint(data)});
 }
 
+Filesystem.prototype.MergeBinaryFile = function(fileName, data) {
+  message.Send("MergeFile", {name: fileName, data: data});
+}
+
+Filesystem.prototype.CreateDirectory = function(dirctoryName) {
+    message.Send("CreateDirectory", dirctoryName );
+}
+
 Filesystem.prototype.ReadFile = function(fileName, callback) {
   message.Register("ReadFile", callback);
   message.Send("ReadFile", { name: fileName });
 }
 
+//deletes contents of specified directory.
+Filesystem.prototype.DeleteDirContents = function(dirPath) {
+    message.Send("DeleteDirContents", dirPath);
+}
+
+//deletes file, recursively deletes dir
+Filesystem.prototype.DeleteNode = function(nodeName) {
+    message.Send("DeleteNode", nodeName);
+}
+
+Filesystem.prototype.Rename = function(oldPath, newPath) {
+    message.Send("Rename", {oldPath:oldPath, newPath: newPath});
+}
+
 Filesystem.prototype.WatchFile = function(fileName, callback) {
   message.Register("WatchFileEvent", callback);
   message.Send("WatchFile", { name: fileName });
+}
+
+Filesystem.prototype.WatchDirectory = function(directoryPath, callback) {
+  message.Register("WatchDirectoryEvent", callback);
+  message.Send("WatchDirectory", { name: directoryPath });
 }
 
 module.exports = Filesystem;
