@@ -8,7 +8,7 @@
 <h1>Teletype KSR-33 demo</h1><h3>.</h3>
 <canvas id="tty0" class="screen" width="792" height="864" style="border-left:92px solid #FAFAD2;border-right:39px solid #FAFAD2;margin-right:18px"> Terminal uses canvas </canvas>
 <canvas id="tty1" class="screen" width="792" height="864" style="border-left:92px solid #FAFAD2;border-right:39px solid #FAFAD2;"> Terminal uses canvas </canvas>
-<script src="../bin/jor1k-master-min.js"></script>
+<script src="jor1k-master-min.js"></script>
 
 <script>
 var Jor1k = require("Jor1k");
@@ -17,7 +17,7 @@ var term0 = new LinuxTerm("tty0");
 var term1 = new LinuxTerm("tty1");
 jor1kparameters = {
     terms: [ term0 , term1],
-    path: "../bin/",
+    path: "../sys/",
 }
 jor1kgui = new Jor1k(jor1kparameters);
 </script>
