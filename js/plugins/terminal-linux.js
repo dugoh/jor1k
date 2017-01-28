@@ -8,7 +8,7 @@ LinuxTerm.prototype.Init = function(jor1kGUI, tty) {
     this.term = new Terminal(48, 72, this.termElementId);
     jor1kGUI.message.Register(tty, function(d) {
        d.forEach(function(c) {
-           this.term.PutChar(c&0x20);
+           this.term.PutChar(c&0xFF);
        }.bind(this));
     }.bind(this));
 
