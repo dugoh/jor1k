@@ -841,7 +841,7 @@ Terminal.prototype.PutChar = function(c) {
 
     this.color[this.brows + cy][cx] = this.GetColor();
     this.cursorx++;
-    //message.Debug("Write: " + String.fromCharCode(c));
+    message.Debug("Write: " + String.fromCharCode(c));
     this.PrepareUpdateRow(cy);
 
     this.OnCharReceived(String.fromCharCode(c));
