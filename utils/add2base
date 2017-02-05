@@ -25,7 +25,7 @@ rm -rf -- * .[!.]* ..?*
 bunzip2 -c ../fs.tar.bz2 |tar -xf -
 rm ../fs.tar.bz2
 
-o=${2}/$(basename -s .bz2 ${1})
+o=${2}/$(basename ${1} .bz2)
 rm $o >/dev/null 2>&1
 wget -q -O - ${1} |bunzip2 -c >$o
 mf $o $3 $4
