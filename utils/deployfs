@@ -1,0 +1,25 @@
+#!/bin/bash
+
+usage() {
+  echo "make sure base is in place and fs2xml is compiled"
+  echo "start from the source root as:"
+  echo "utils/deployfs"
+  exit
+}
+
+cd sys 2>/dev/null || usage
+ls fs.tar.bz2 >/dev/null 2>&1 || usage
+
+rm -rf fs sysroot 2>/dev/null
+
+../utils/fs2xml fs.tar.bz2 ; cat fs.json
+
+loc="$(head -1 basefs.json)"
+
+(echo "$loc"; sed -e 1d fs.json)>basefs.json
+
+# for webservers like thttpd
+find fs -type d -exec chmod 755 {} \;
+find fs -type f -exec chmod 644 {} \;
+
+mv fs sysroot
