@@ -6,7 +6,7 @@ before_script:
   - wget -O sys/vmlinux.bin.bz2 https://dugoh.github.io/tcb/vmlinux.bin.bz2
   - fakeroot utils/basefs
   - fakeroot utils/add2base https://dugoh.github.io/tcb/cu.bz2 bin 40775 0
-  - utils deployfs
+  - utils/deployfs
   - python -m SimpleHTTPServer >/dev/null 2>&1 &
   - sleep 2
 node_js:
