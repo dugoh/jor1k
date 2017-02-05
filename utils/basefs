@@ -1,0 +1,87 @@
+#!/bin/bash
+
+usage() {
+  echo "start from the source root as:"
+  echo "fakeroot utils/basefs"
+  exit
+}
+
+md() {
+  mkdir "${1}" 2>/dev/null
+  mf $@
+}
+
+mf() {
+  m=$3; [[ -z $m ]] && m=0
+  chmod ${2:(-4)} "${1}"
+  chown -h ${m}:${m} "${1}"
+}
+
+cd sys/sysroot 2>/dev/null || usage
+((EUID)) && usage
+
+rm -rf ../fs.ta* 2>/dev/null
+
+md bin 40775 ; cd bin
+  bunzip2 *bz2
+  mf busybox 104755
+  for l in login sh init; do
+    ln -s busybox $l
+  done
+cd ..
+
+md etc 40775; cd etc
+  mf services 100644
+  mf nsswitch.conf 100644
+  mf group 100775
+  mf fstab 100644
+  mf inittab 100755
+  mf host.conf 100644
+  mf inetd.conf 100644
+  mf passwd 100644
+  md network 40775 ; cd network
+    mf interfaces 100644
+  cd ..
+  md init.d 40775; cd init.d
+    mf rcS 100775
+  cd ..
+cd ..
+
+
+md home 40755 ; cd home
+  md user 42755 1000 ; cd user
+    cp ../../root/profile .profile
+    mf .profile 100644 1000
+  cd ..
+cd ..
+
+
+
+md usr 40755; cd usr
+  md sbin 40755
+  md share 40755; cd share
+    md udhcpc 40755; cd udhcpc
+      mf default.script 100755
+    cd ..
+  cd ..
+  md bin 40755; cd bin
+    mf showmenu 100755
+    mf help 100755
+  cd ..
+cd ..
+
+
+md sbin 40755
+md dev 40755
+md proc 40755
+md sys 40755
+md tmp 41777
+md var 40755; cd var
+  md run 40777
+  md empty 40755
+cd ..
+
+tar -cvf ../fs.tar bin etc home usr sbin dev proc sys tmp var
+bzip2 --best ../fs.tar
+
+exit
