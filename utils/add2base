@@ -1,0 +1,37 @@
+#!/bin/bash
+
+usage() {
+
+  echo "make sure base is in place by running utils/basefs first"
+  echo "start from the source root as:"
+  echo "fakeroot utils/add2base URL.bz2 DIR MODE [UID]"
+  exit
+}
+
+mf() {
+  m=$3; [[ -z $m ]] && m=0
+  chmod ${2:(-4)} "${1}"
+  chown -h ${m}:${m} "${1}"
+}
+
+
+cd sys/sysroot 2>/dev/null || usage
+((EUID)) && usage
+
+ls ../fs.tar.bz2 >/dev/null 2>&1 || usage
+
+rm -rf -- * .[!.]* ..?*
+
+bunzip2 -c ../fs.tar.bz2 |tar -xf -
+rm ../fs.tar.bz2
+
+o=${2}/$(basename -s .bz2 ${1})
+rm $o >/dev/null 2>&1
+wget -q -O - ${1} |bunzip2 -c >$o
+mf $o $3 $4
+
+
+tar -cf ../fs.tar bin etc home usr sbin dev proc sys tmp var
+bzip2 --best ../fs.tar
+
+exit

@@ -81,7 +81,7 @@ md var 40755; cd var
   md empty 40755
 cd ..
 
-tar -cvf ../fs.tar bin etc home usr sbin dev proc sys tmp var
+tar -cf ../fs.tar bin etc home usr sbin dev proc sys tmp var
 bzip2 --best ../fs.tar
 
 exit
