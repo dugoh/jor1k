@@ -5,10 +5,13 @@ before_script:
   # fetch latest kernel from the tcb repo 
   - wget -O sys/vmlinux.bin.bz2 https://dugoh.github.io/tcb/vmlinux.bin.bz2
   - fakeroot utils/basefs
-  - fakeroot utils/add2base https://dugoh.github.io/tcb/pdp11.static.bz2  bin 40775 0
-  - fakeroot utils/add2base https://dugoh.github.io/tcb/cu.static.bz2     bin 40775 0
-  - fakeroot utils/add2base https://dugoh.github.io/tcb/mount.static.bz2  bin 40775 0
-  - fakeroot utils/add2base https://dugoh.github.io/tcb/sh.static.bz2     bin 40775 0
+  - fakeroot utils/add2base https://dugoh.github.io/tcb/pdp11.static.bz2   bin 40775 0
+  - fakeroot utils/add2base https://dugoh.github.io/tcb/cu.static.bz2      bin 40775 0
+  - fakeroot utils/add2base https://dugoh.github.io/tcb/mount.static.bz2   bin 40775 0
+  - fakeroot utils/add2base https://dugoh.github.io/tcb/sh.static.bz2      bin 40775 0
+  - fakeroot utils/add2base http://www.xs4all.nl/~dugo/4v6/dist.tap.bz2    etc 10644 0
+  - fakeroot utils/add2base http://www.xs4all.nl/~dugo/4v6/pdp11_1.ini.bz2 etc 10644 0
+  - fakeroot utils/add2base http://www.xs4all.nl/~dugo/4v6/pdp11_2.ini.bz2 etc 10644 0
   - utils/deployfs
   - python -m SimpleHTTPServer >/dev/null 2>&1 &
   - sleep 2
