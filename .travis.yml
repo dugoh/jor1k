@@ -5,7 +5,7 @@ before_script:
   # fetch latest kernel from the tcb repo 
   - wget -O sys/vmlinux.bin.bz2 https://dugoh.github.io/tcb/vmlinux.bin.bz2
   - fakeroot utils/basefs
-  - fakeroot utils/add2base https://dugoh.github.io/tcb/pdp11.bz2         bin 40775 0
+  - fakeroot utils/add2base https://dugoh.github.io/tcb/pdp11.static.bz2  bin 40775 0
   - fakeroot utils/add2base https://dugoh.github.io/tcb/cu.static.bz2     bin 40775 0
   - fakeroot utils/add2base https://dugoh.github.io/tcb/mount.static.bz2  bin 40775 0
   - fakeroot utils/add2base https://dugoh.github.io/tcb/sh.static.bz2     bin 40775 0
