@@ -17,6 +17,11 @@ var LinuxTerm = require("LinuxTerm");
 var term0 = new LinuxTerm("tty0");
 var term1 = new LinuxTerm("tty1");
 jor1kparameters = {
+    system: {
+        memorysize: 64, // in MB, must be a power of two
+        cpu: "asm", // short name for the cpu to use
+        ncores: 1,
+    }, 
     terms: [ term0 , term1],
     path: "../sys/",
 }
