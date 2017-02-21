@@ -747,7 +747,7 @@ Terminal.prototype.HandleEscapeSequence = function() {
 
 Terminal.prototype.PutChar = function(c) {
     var i = 0;
-    message.Debug("Char:" + c + " " +  String.fromCharCode(c));
+    // message.Debug("Char:" + c + " " +  String.fromCharCode(c));
     // escape sequence (CS)
     if (this.escapetype == 2) {
         this.escapestring += String.fromCharCode(c);
@@ -841,7 +841,7 @@ Terminal.prototype.PutChar = function(c) {
 
     this.color[this.brows + cy][cx] = this.GetColor();
     this.cursorx++;
-    message.Debug("Write: " + String.fromCharCode(c));
+    // message.Debug("Write: " + String.fromCharCode(c));
     this.PrepareUpdateRow(cy);
 
     this.OnCharReceived(String.fromCharCode(c));
