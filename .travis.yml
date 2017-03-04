@@ -6,6 +6,7 @@ before_script:
   - wget -O sys/vmlinux.bin.bz2 https://dugoh.github.io/tcb/vmlinux.bin.bz2
   - fakeroot utils/basefs
   - fakeroot utils/add2base https://dugoh.github.io/srb/pdp11.static.bz2   bin 40775 0
+  - fakeroot utils/add2base https://dugoh.github.io/tcb/pdp7.static.bz2    bin 40775 0
   - fakeroot utils/add2base https://dugoh.github.io/srb/cu.static.bz2      bin 40775 0
   - fakeroot utils/add2base https://dugoh.github.io/srb/mount.static.bz2   bin 40775 0
   - fakeroot utils/add2base https://dugoh.github.io/srb/sh.static.bz2      bin 40775 0
