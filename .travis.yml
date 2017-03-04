@@ -14,6 +14,9 @@ before_script:
   - fakeroot utils/add2base http://oldbsd.org/ci/dist.tap.bz2              etc 10644 0
   - fakeroot utils/add2base http://oldbsd.org/ci/pdp11_1.ini.bz2           etc 10644 0
   - fakeroot utils/add2base http://oldbsd.org/ci/pdp11_2.ini.bz2           etc 10644 0
+  - fakeroot utils/add2base https://dugoh.github.io/pdp7-unix/boot.rim     etc 10644 0
+  - fakeroot utils/add2base https://dugoh.github.io/pdp7-unix/unixv0.simh  etc 10644 0
+  - fakeroot utils/add2base https://dugoh.github.io/pdp7-unix/image.fs     etc 10644 0  
   - utils/deployfs
   - python -m SimpleHTTPServer >/dev/null 2>&1 &
   - sleep 2
