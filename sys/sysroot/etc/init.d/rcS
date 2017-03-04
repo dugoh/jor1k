@@ -1,0 +1,31 @@
+#! /bin/sh
+# mount/remount everything, read/write
+busybox mount -a
+busybox mount -o remount,rw /
+# set up busybox
+/bin/busybox --install -s
+# set hostname
+hostname openrisc &
+# make home directory for root user
+mkdir -p /root &
+# telnetd requires this
+mkdir -p /dev/pts && \
+mount -t devpts none /dev/pts &
+
+mkdir -p /dev/shm && \
+mount -t tmpfs none /dev/shm &
+
+chmod a+rw /dev/fb0
+chmod a+rw /dev/dsp*
+chmod -R a+rw /dev/snd
+exit
+####
+#########
+#########
+#########
+#########
+#########
+#########
+#########
+#########
+#########

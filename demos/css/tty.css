@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'tty';
+    src: url(TELE.TTF) format("truetype");
+}
+h3 {
+  color: #ffffff;
+  font-family: tty;
+}

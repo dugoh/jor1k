@@ -1,0 +1,63 @@
+{"src":"../sys/sysroot", "fs":[
+	{ "name":"bin", "mode":"40775", "child":[
+		{ "name":"busybox", "mode":"104755", "size":1377512, "c":1},
+		{ "name":"login", "mode":"120777", "path":"busybox"},
+		{ "name":"sh", "mode":"120777", "path":"busybox"},
+		{ "name":"init", "mode":"120777", "path":"busybox"},
+		{ "name":"pdp11.static", "mode":"100775", "size":2584528, "c":1},
+		{ "name":"pdp7.static", "mode":"100775", "size":1598484, "c":1},
+		{ "name":"cu.static", "mode":"100775", "size":873548, "c":1},
+		{ "name":"mount.static", "mode":"100775", "size":8542},
+		{ "name":"sh.static", "mode":"100775", "size":792052, "c":1},
+		{ "name":"strace.static", "mode":"100775", "size":4003780, "c":1}
+	]},
+	{ "name":"etc", "mode":"40775", "child":[
+		{ "name":"fstab", "mode":"100644", "size":174},
+		{ "name":"group", "mode":"100775", "size":31},
+		{ "name":"host.conf", "mode":"100644", "size":27},
+		{ "name":"inetd.conf", "mode":"100644", "size":59},
+		{ "name":"init.d", "mode":"40775", "child":[
+			{ "name":"rcS", "mode":"100775", "size":527},
+			{ "name":"rcS-compile", "mode":"100644", "size":902}
+		]},
+		{ "name":"inittab", "mode":"100755", "size":234},
+		{ "name":"network", "mode":"40775", "child":[
+			{ "name":"interfaces", "mode":"100644", "size":64}
+		]},
+		{ "name":"nsswitch.conf", "mode":"100644", "size":134},
+		{ "name":"passwd", "mode":"100644", "size":137},
+		{ "name":"services", "mode":"100644", "size":18832, "c":1},
+		{ "name":"dist.tap", "mode":"100644", "size":6291996, "c":1},
+		{ "name":"pdp11_1.ini", "mode":"100644", "size":4277},
+		{ "name":"pdp11_2.ini", "mode":"100644", "size":6202},
+		{ "name":"boot.rim", "mode":"100644", "size":120},
+		{ "name":"unixv0.simh", "mode":"100644", "size":539},
+		{ "name":"image.fs", "mode":"100644", "size":4096000, "c":1}
+	]},
+	{ "name":"home", "mode":"40755", "child":[
+		{ "name":"user", "mode":"42755", "uid":1000, "gid":1000, "child":[
+			{ "name":".profile", "mode":"100644", "size":17, "uid":1000, "gid":1000, "src":"home/user/profile"}
+		]}
+	]},
+	{ "name":"usr", "mode":"40755", "child":[
+		{ "name":"bin", "mode":"40755", "child":[
+			{ "name":"help", "mode":"100755", "size":6950},
+			{ "name":"showmenu", "mode":"100755", "size":9680, "c":1}
+		]},
+		{ "name":"share", "mode":"40755", "child":[
+			{ "name":"udhcpc", "mode":"40755", "child":[
+				{ "name":"default.script", "mode":"100755", "size":1285}
+			]}
+		]},
+		{ "name":"sbin", "mode":"40755", "child":[] }
+	]},
+	{ "name":"sbin", "mode":"40755", "child":[] },
+	{ "name":"dev", "mode":"40755", "child":[] },
+	{ "name":"proc", "mode":"40755", "child":[] },
+	{ "name":"sys", "mode":"40755", "child":[] },
+	{ "name":"tmp", "mode":"41777", "child":[] },
+	{ "name":"var", "mode":"40755", "child":[
+		{ "name":"run", "mode":"40777", "child":[] },
+		{ "name":"empty", "mode":"40755", "child":[] }
+	]}
+]}

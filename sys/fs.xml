@@ -1,0 +1,63 @@
+<FS src='fs/'>
+	<Dir name='bin' mode='40775'>
+		<File name='busybox' mode='104755' size='1377512' compressed='1'/>
+		<Link name='login' mode='120777' path='busybox' />
+		<Link name='sh' mode='120777' path='busybox' />
+		<Link name='init' mode='120777' path='busybox' />
+		<File name='pdp11.static' mode='100775' size='2584528' compressed='1'/>
+		<File name='pdp7.static' mode='100775' size='1598484' compressed='1'/>
+		<File name='cu.static' mode='100775' size='873548' compressed='1'/>
+		<File name='mount.static' mode='100775' size='8542'/>
+		<File name='sh.static' mode='100775' size='792052' compressed='1'/>
+		<File name='strace.static' mode='100775' size='4003780' compressed='1'/>
+	</Dir>
+	<Dir name='etc' mode='40775'>
+		<File name='fstab' mode='100644' size='174'/>
+		<File name='group' mode='100775' size='31'/>
+		<File name='host.conf' mode='100644' size='27'/>
+		<File name='inetd.conf' mode='100644' size='59'/>
+		<Dir name='init.d' mode='40775'>
+			<File name='rcS' mode='100775' size='527'/>
+			<File name='rcS-compile' mode='100644' size='902'/>
+		</Dir>
+		<File name='inittab' mode='100755' size='234'/>
+		<Dir name='network' mode='40775'>
+			<File name='interfaces' mode='100644' size='64'/>
+		</Dir>
+		<File name='nsswitch.conf' mode='100644' size='134'/>
+		<File name='passwd' mode='100644' size='137'/>
+		<File name='services' mode='100644' size='18832' compressed='1'/>
+		<File name='dist.tap' mode='100644' size='6291996' compressed='1'/>
+		<File name='pdp11_1.ini' mode='100644' size='4277'/>
+		<File name='pdp11_2.ini' mode='100644' size='6202'/>
+		<File name='boot.rim' mode='100644' size='120'/>
+		<File name='unixv0.simh' mode='100644' size='539'/>
+		<File name='image.fs' mode='100644' size='4096000' compressed='1'/>
+	</Dir>
+	<Dir name='home' mode='40755'>
+		<Dir name='user' mode='42755' uid='1000' gid='1000'>
+			<File name='.profile' mode='100644' size='17' uid='1000' gid='1000' src='home/user/profile'/>
+		</Dir>
+	</Dir>
+	<Dir name='usr' mode='40755'>
+		<Dir name='bin' mode='40755'>
+			<File name='help' mode='100755' size='6950'/>
+			<File name='showmenu' mode='100755' size='9680' compressed='1'/>
+		</Dir>
+		<Dir name='share' mode='40755'>
+			<Dir name='udhcpc' mode='40755'>
+				<File name='default.script' mode='100755' size='1285'/>
+			</Dir>
+		</Dir>
+		<Dir name='sbin' mode='40755'></Dir>
+	</Dir>
+	<Dir name='sbin' mode='40755'></Dir>
+	<Dir name='dev' mode='40755'></Dir>
+	<Dir name='proc' mode='40755'></Dir>
+	<Dir name='sys' mode='40755'></Dir>
+	<Dir name='tmp' mode='41777'></Dir>
+	<Dir name='var' mode='40755'>
+		<Dir name='run' mode='40777'></Dir>
+		<Dir name='empty' mode='40755'></Dir>
+	</Dir>
+</FS>
